@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_expenses/widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
+import './widgets/chart.dart';
 
 
 void main() => runApp(MyApp());
@@ -18,17 +19,20 @@ class MyApp extends StatelessWidget {
         fontFamily: 'QuickSand',
         textTheme: ThemeData.light().textTheme.copyWith(
           titleMedium: TextStyle(
-            fontFamily: 'OpenSans',
+            fontFamily: 'OpenSans ',
             fontWeight: FontWeight.bold,
             fontSize: 18,
-          )
+          ),
         ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
             titleMedium: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 20,
-            )
+            ),
+            // button: TextStyle(
+            //   color: Theme.of(context).primaryColor,
+            // )
         ),)
       ),
       home: MyHomePage(),
@@ -37,6 +41,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -57,12 +62,18 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
-  void _addNewTransaction(String txTitle, double txAmount){
+  List<Transaction> get _recentTransaction{
+    return _userTransaction.where((tx) {
+      return tx.date!.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
+  void _addNewTransaction(String txTitle, double txAmount, DateTime choseDate){
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: choseDate,
     );
 
     setState((){
@@ -83,6 +94,14 @@ class _MyHomePageState extends State<MyHomePage> {
         );
   }
 
+  void _deleteTransaction(String id){
+    setState((){
+      _userTransaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,15 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.grey,
-                child: Text('Chart'),
-                elevation: 5,
-              ),
-            ),
-              TransactionList(_userTransaction),
+            Chart(_recentTransaction),
+              TransactionList(_userTransaction, _deleteTransaction),
           ],),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
