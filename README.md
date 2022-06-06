@@ -1,16 +1,7 @@
-# personal_expenses
+## Personal Expenses
 
 This application will help you to control your finances.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- allows you to add daily consumption of each item with an indicated date.
+- the list is capable of many items and easy to scroll.
+- displays a chart with visual effects that shows on which day of the week maximum spending was made.
