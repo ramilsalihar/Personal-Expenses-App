@@ -39,24 +39,24 @@ double get totalSpending{
     @override
     Widget build(BuildContext context) {
       return Card(
-        elevation: 6,
-        margin: EdgeInsets.all(20),
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: groupedTransactionValues.map((data) {
-              return Flexible(
-                fit: FlexFit.tight,
-                child: ChartBar(
-                  data['day'].toString(),
-                  data['amount'] as double,
-                  totalSpending == 0.0 ? 0.0 :(data['amount'] as double) / totalSpending,
-                ),
-              );
-            }).toList(),
+          elevation: 6,
+          margin: EdgeInsets.all(20),
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: groupedTransactionValues.map((data) {
+                return Flexible(
+                  fit: FlexFit.tight,
+                  child: ChartBar(
+                    data['day'].toString(),
+                    data['amount'] as double,
+                    totalSpending == 0.0 ? 0.0 :(data['amount'] as double) / totalSpending,
+                  ),
+                );
+              }).toList(),
+            ),
           ),
-        ),
       );
     }
   }
